@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-03-22T16:41:21+08:00</updated>
+  <updated>2014-03-22T16:49:31+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -39,7 +39,13 @@
   git push origin source
 </code></pre>
 
-<p>   部署前可以在本地预览，输入rake preview之后在浏览器输入<a href="http://localhost:4000/%E6%9D%A5%E8%AE%BF%E9%97%AE">http://localhost:4000/%E6%9D%A5%E8%AE%BF%E9%97%AE</a></p>
+<p>   部署前可以在本地预览，输入rake preview之后在浏览器输入<a href="http://localhost:4000/">http://localhost:4000/</a>
+  <h4> 4.写博客</h4></p>
+
+<pre><code>  rake new_post["myTitle"]
+
+  文章生成在目录下的source/_posts目录下。文章是markdown格式的。然后使用支持markdown语法的编辑     器就可以形如流水的写博客。此博客是在Ubuntu ReText写的。
+</code></pre>
 ]]></content>
   </entry>
   
