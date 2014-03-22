@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-03-22T17:11:32+08:00</updated>
+  <updated>2014-03-22T17:18:28+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -47,11 +47,11 @@
   <h4> 4.写博客</h4></p>
 
 <pre><code>  rake new_post["myTitle"]
-
-  文章生成在目录下的source/_posts目录下。文章是markdown格式的。
-  然后使用支持markdown语法的编辑器就可以形如流水的写博客。
-  此博客是在Ubuntu ReText写的。
 </code></pre>
+
+<p>   文章生成在目录下的source/_posts目录下。文章是markdown格式的。
+   然后使用支持markdown语法的编辑器就可以形如流水的写博客。
+   此博客是在Ubuntu ReText写的。</p>
 ]]></content>
   </entry>
   
