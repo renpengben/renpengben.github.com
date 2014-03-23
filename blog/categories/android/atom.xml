@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | Renpeng's Blog]]></title>
+  <link href="http://renpengben.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://renpengben.github.io/"/>
+  <updated>2014-03-23T16:11:47+08:00</updated>
+  <id>http://renpengben.github.io/</id>
+  <author>
+    <name><![CDATA[Renpeng]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FragmentTabHost切换Fragment时避免重复加载UI]]></title>
+    <link href="http://renpengben.github.io/blog/2014/03/23/fragmenttabhost-fragment/"/>
+    <updated>2014-03-23T15:38:15+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/03/23/fragmenttabhost-fragment</id>
+    <content type="html"><![CDATA[<p><span>使用FragmentTabHost时，Fragment之间切换时每次都会调用onCreateView方法，导致每次Fragment的布局都重绘，无法保持Fragment原有状态。</span></p>
+
+<p><span>解决办法：在Fragment onCreateView方法中缓存View。<span></p>
+
+<pre><code>       { % gist ba35e9abd8009cbf9030 %}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
