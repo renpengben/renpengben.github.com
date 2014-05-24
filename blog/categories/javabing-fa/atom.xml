@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java并发 | Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/blog/categories/javabing-fa/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-05-10T23:29:29+08:00</updated>
+  <updated>2014-05-24T22:24:27+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -12,6 +12,122 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[《Java 7 Concurrency Cookbook 读书笔记》基本线程同步]]></title>
+    <link href="http://renpengben.github.io/blog/2014/05/24/basic-thread-synchronization/"/>
+    <updated>2014-05-24T22:21:33+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/05/24/basic-thread-synchronization</id>
+    <content type="html"><![CDATA[<pre><code>临界区是访问一个共享资源在同一时间不能被超过一个线程执行的代码块。
+</code></pre>
+
+<p><strong>同步方法</strong></p>
+
+<pre><code>每个方法声明为synchronized是一个临界区。
+synchronized关键字来保护访问的代码块，替换在整个方法上使用synchronized关键字。
+一般使用this关键字引用执行该方法的对象。
+
+synchronized (this) {
+// Java code
+}
+</code></pre>
+
+<p><strong>在同步的类里安排独立属性</strong></p>
+
+<pre><code>当使用synchronized关键字来保护代码块时，必须通过一个对象的引用作为参数。
+通常，使用this关键字来引用执行该方法的对象，当有多个共享属性时可以创建多个独立属性，
+保证每个共享变量同步访问。
+</code></pre>
+
+<p><strong>在同步代码中使用条件</strong></p>
+
+<pre><code>Java在Object对象中提供wait()，notify()，和notifyAll() 方法的实现。一个线程可以在
+synchronized代码块中调用wait()方法。如果在synchronized代码块外部调用wait()方法，
+JVM会抛出IllegalMonitorStateException异常。
+当线程调用wait()方法，JVM让这个线程睡眠，并且释放控制synchronized代码块的对象，
+这样，虽然它正在执行但允许其他线程执行由该对象保护的其他synchronized代码块。
+为了唤醒线程，你必须在由相同对象保护的synchronized代码块中调用notify()或notifyAll()方法。
+</code></pre>
+
+<p><strong>使用Lock同步代码块</strong></p>
+
+<pre><code>Lock 接口比synchronized关键字提供更多额外的功能。新功能之一是实现的tryLock()方法。
+这种方法试图获取锁的控制权并且如果它不能获取该锁，是因为其他线程在使用这个锁，
+它将返回这个锁。使用synchronized关键字，当线程A试图执行synchronized代码块，
+如果线程B正在执行它，那么线程A将阻塞直到线程B执行完synchronized代码块。
+使用锁，你可以执行tryLock()方法，这个方法返回一个 Boolean值表示，
+是否有其他线程正在运行这个锁所保护的代码。  
+
+Lock接口允许读写操作分离。
+Lock接口比synchronized关键字提供更好的性能。
+
+private final Lock lock=new ReentrantLock();
+//获取锁
+lock.lock();
+try {
+
+   } catch (InterruptedException e) {
+ }finally { 
+//释放锁
+lock.unlock();
+ }
+
+Lock 接口（和ReentrantLock类）包含其他方法来获取锁的控制权，那就是tryLock()方法。
+这个方法与lock()方法的最大区别是，如果一 个线程调用这个方法不能获取Lock接口的控制权
+时，将会立即返回并且不会使这个线程进入睡眠。这个方法返回一个boolean值，
+true表示这个线程 获取了锁的控制权，false则表示没有。
+
+ReentrantLock锁可重入。
+</code></pre>
+
+<p><strong>使用读/写锁同步数据访问</strong></p>
+
+<pre><code>ReadWriteLock接口和唯一一个实现它的ReentrantReadWriteLock类。
+这个类提供两把锁，一把用于读操作和一把用于写操作。同时可以有多个线程执行读操作，
+但只有一个线程可以执行写操作。当一个线程正在执行一个写操作，不可能有任何线程执行读操作。
+
+private ReadWriteLock lock=new ReentrantReadWriteLock();
+
+//读操作锁
+private void read(){
+
+lock.readLock().lock();
+//read code
+lock.readLock().unlock();
+
+}
+//写操作锁
+private void write(){
+lock.writeLock().lock();
+//write code
+lock.writeLock().unlock();
+}
+</code></pre>
+
+<p><strong>修改Lock的公平性</strong></p>
+
+<pre><code>在ReentrantLock类和 ReentrantReadWriteLock类的构造器中，允许一个名为fair的boolean
+类型参数， 默认值为 false。
+当多个线程等待一把锁时，这个锁必须选择一个进入临界区，当fair为false时这个选择没有标准
+即非公平模式。
+当这个值为true时，锁将选择等待时间最长的进入临界区即公平模式。由于tryLock()方法并不会
+使线程进入睡眠，因此此参数不影响它。
+</code></pre>
+
+<p><strong>在Lock中使用多条件</strong></p>
+
+<pre><code>Condition条件变量，等待某种条件的发生，条件发生后，可以唤醒等待在该条件上的一个线程，
+或所有线程。条件变量要与锁一起协同工作。
+
+ ReentrantLock lock = new ReentrantLock(); 
+ Condition condition = lock.newCondition(); 
+
+ condition.await();//满足某条件时等待  Object.wait();
+ condition.signal(); //唤醒等待的其中一个线程  Object.notify(); 
+ condition.signalAll(); //唤醒等待的所有线程   Object.notifyAll();
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[《Java 7 Concurrency Cookbook 读书笔记》线程管理]]></title>
