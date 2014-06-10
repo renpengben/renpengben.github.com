@@ -125,7 +125,46 @@
    它也能操作并返回其类型的值。
    </pre></p>
 
-<p><strong><em>例子</em></strong></p>
+<p><strong><em>函数式接口</em></strong></br>
+Lambda表达式如何匹配Java的类型系统？每一个lambda都能够通过一个特定的接口，与一个给定的类型进行匹配。</br>
+一个所谓的函数式接口必须要有且仅有一个抽象方法声明(java8允许接口有默认方法)。每个与之对应的lambda表达式必须要与抽象方法的声明相匹配。</br></br>
+1、一个可以接受Lambda表达式的接口只能有一个抽象方法，否则在编译时将抛出异常。</br>
+2、为了显示的说明某接口是可使用lambda表达式,可以使用<code>   @FunctionalInterface </code>注解该接口。</br></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">interface</span> <span class="nc">Converter</span><span class="o">&lt;</span><span class="n">F</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">T</span> <span class="nf">convert</span><span class="o">(</span><span class="n">F</span> <span class="n">from</span><span class="o">);</span><span class="c1">//抽象方法只能一个</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">default</span> <span class="kt">double</span> <span class="nf">sqrt</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span><span class="c1">//可以多个接口默认方法</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Converter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">converter</span> <span class="o">=</span> <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+</span><span class='line'><span class="n">Integer</span> <span class="n">converted</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="s">&quot;123&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">converted</span><span class="o">);</span>    <span class="c1">// 123</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+<a href="">Default Methods(默认方法)详情</a>
+</br>
+注意，如果不写<code>   @FunctionalInterface </code>标注，程序也是正确的。</p>
+
+<p><strong><em>官网例子</em></strong>
+</br></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -171,36 +210,6 @@
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p><strong><em>注意问题</em></strong>
-1、一个可以接受Lambda表达式的接口只能有一个方法，否则在编译时将抛出异常。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">interface</span> <span class="nc">IntegerMath</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">//如果IntegerMath接口需要接受Lambda表达式，只能定义一个方法。</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="nf">operation</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-2、为了显示的说明某接口是可使用lambda表达式， 可以使用@FunctionalInterface注解该接口。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="nd">@FunctionalInterface</span>
-</span><span class='line'> <span class="kd">interface</span> <span class="nc">IntegerMath</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="nf">operation</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
 
 <h2>为什么Java要增加lambda表达式？</h2>
 
@@ -439,7 +448,7 @@ Preducate源码如下：</p>
 
 
 <p>
-但是有一个问题，如果很多地方都要用到这个资源，那么就存在很多段类似这样的代码，这很明显违反了DRY（Don&rsquo;t Repeat It Yourself）原则。而且如果某位程序员由于某些原因忘了用try/finally处理资源，那么很可能导致内存泄漏。那咋办呢？Java 8提供了一个Consumer接口，代码改写为如下：
+但是有一个问题，如果很多地方都要用到这个资源，那么就存在很多段类似这样的代码，这很明显违反了DRY（Don&rsquo;t Repeat It Yourself）原则。而且如果某位程序员由于某些原因忘了用try/finally处理资源，那么很可能导致内存泄漏。那咋办呢？Java 8提供了一个Consumer接口，代码改写为如下：</br>
 因为对资源对象resource执行operate方法时可能抛出RuntimeException，所以需要在finally语句块中释放资源，防止可能的内存泄漏。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -511,7 +520,133 @@ Preducate源码如下：</p>
 
 <p>
 外部要访问Resource，只能通过withResource方法了，而且也完全杜绝了因人为疏忽而导致的潜在内存泄漏。
-</br>
+</br></p>
+
+<h2>Lambda表达式范围</h2>
+
+<p>对于lambdab表达式外部的变量，其访问权限的粒度与匿名对象的方式非常类似。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">interface</span> <span class="nc">Converter</span><span class="o">&lt;</span><span class="n">F</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">T</span> <span class="nf">convert</span><span class="o">(</span><span class="n">F</span> <span class="n">from</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+1.访问局部变量</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="n">Converter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">stringConverter</span> <span class="o">=</span>
+</span><span class='line'>        <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">stringConverter</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>     <span class="c1">// 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+与匿名对象不同的是，变量num不一定是final。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span><span class="c1">//去掉final也是正确的</span>
+</span><span class='line'><span class="n">Converter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">stringConverter</span> <span class="o">=</span>
+</span><span class='line'>        <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">stringConverter</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>     <span class="c1">// 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+但是num在编译的时候隐式的当作final变量来处理。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="n">Converter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">stringConverter</span> <span class="o">=</span>
+</span><span class='line'>        <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+</span><span class='line'><span class="n">num</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span><span class="c1">//这样是错误的不能对final变量重新复制，在lambda表达式内部改变num的值也是不允许的</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+2.访问成员变量和静态变量
+与局部变量不同，我们在lambda表达式的内部能获取到对成员变量或静态变量的读写权。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">LambdaTest</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="kt">int</span> <span class="n">outerStaticNum</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">outerNum</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">testScopes</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Converter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">stringConverter1</span> <span class="o">=</span> <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">outerNum</span> <span class="o">=</span> <span class="mi">23</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Converter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">stringConverter2</span> <span class="o">=</span> <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">outerStaticNum</span> <span class="o">=</span> <span class="mi">72</span><span class="o">;</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">from</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">};</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+默认方法无法在lambda表达式内部被访问。因此下面的代码是无法通过编译的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">interface</span> <span class="nc">Formula</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="nf">calculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">default</span> <span class="kt">double</span> <span class="nf">sqrt</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">Formula</span> <span class="n">formula</span> <span class="o">=</span> <span class="o">(</span><span class="n">a</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">sqrt</span><span class="o">(</span> <span class="n">a</span> <span class="o">*</span> <span class="mi">100</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
 <strong><em>参考资料:</em></strong>
 </br>
 <a href="http://www.lambdafaq.org/">http://www.lambdafaq.org/</a>
