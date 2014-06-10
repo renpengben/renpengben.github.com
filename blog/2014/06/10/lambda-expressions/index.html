@@ -1,24 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Renpeng's Blog]]></title>
-  <link href="http://renpengben.github.io/atom.xml" rel="self"/>
-  <link href="http://renpengben.github.io/"/>
-  <updated>2014-06-10T20:41:37+08:00</updated>
-  <id>http://renpengben.github.io/</id>
-  <author>
-    <name><![CDATA[Renpeng]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Java8新特性之Lambda表达式 - Renpeng's Blog</title>
+	<meta name="author" content="Renpeng">
 
-  
-  <entry>
-    <title type="html"><![CDATA[Java8新特性之Lambda表达式]]></title>
-    <link href="http://renpengben.github.io/blog/2014/06/10/lambda-expressions/"/>
-    <updated>2014-06-10T20:06:56+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/06/10/lambda-expressions</id>
-    <content type="html"><![CDATA[<h2>什么是Lambda表达式？</h2>
+	
+	<meta name="description" content="Java8新特性之Lambda表达式 什么是Lambda表达式？ 在一般数学计算中lambda表达式就是一个函数，为部分或者所有输入值指定一个输出值，在java中Lambad表达式是以函数的概念引入，可以理解为一种语法更加紧凑的匿名方法，并且允许省略修饰符，返回类型并且某种情况下的参数类型。 &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Renpeng's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://renpengben.github.io/blog/2014/06/10/lambda-expressions/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+         <script src="/javascripts/jquery.min.js"></script>
+	
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='/head.jpg?s=160' alt='Profile Picture' style='width: 160px;' />");
+	</script>
+</div>
+<h1><a href="/">Renpeng's Blog</a></h1>
+<p class="subtitle">Android Java NoSql</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/renpengben" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+		<a class="github" href="https://github.com/renpengben" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">Java8新特性之Lambda表达式</h1>
+	<div class="entry-content" itemprop="articleBody"><h2>什么是Lambda表达式？</h2>
 
 <p>   在一般数学计算中lambda表达式就是一个函数，为部分或者所有输入值指定一个输出值，在java中Lambad表达式是以函数的概念引入，可以理解为一种语法更加紧凑的匿名方法，并且允许省略修饰符，返回类型并且某种情况下的参数类型。
 </br>
@@ -464,462 +523,71 @@ Preducate源码如下：</p>
 <a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a>
 </br>
 <a href="http://www.ituring.com.cn/article/22143">http://www.ituring.com.cn/article/22143</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java 8新特性简介]]></title>
-    <link href="http://renpengben.github.io/blog/2014/06/10/ecnew-java8/"/>
-    <updated>2014-06-10T20:00:34+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/06/10/ecnew-java8</id>
-    <content type="html"><![CDATA[<p> <h4>Java Programming Language(Java语言)</h4>
-   1.<a href="http://renpengben.github.io/blog/2014/06/10/lambda-expressions/">Lambda Expressions(Lambad表达式)</a>
-   </br>
-   2.Method References(方法引用)
-   </br>
-   3.Default Methods(默认方法)
-   </br>
-   4.Repeating Annotations(重复注解)
-   </br>
-   5.Type Annotations(类型注解)
-   </br>
-   6.Improved type inference(改进类型推断)
-   </br>
-   7.Method parameter reflection(方法参数反射)
- <h4>Collections(集合)</h4>
-   1.New java.util.stream package(新包java.util.stream)
-   </br>
-   2.Performance Improvement for HashMaps with Key Collisions(HashMaps Key碰撞的性能改进)
-   </br>
-   <strong><em>未完待续&hellip;</em></strong>
-   </br>
-   <strong><em>参考资料:</em></strong>
-</br>
- <a href="http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html">http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eclipse Kepler搭建Java8开发环境]]></title>
-    <link href="http://renpengben.github.io/blog/2014/06/10/eclipse-kepler-java8/"/>
-    <updated>2014-06-10T19:51:11+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/06/10/eclipse-kepler-java8</id>
-    <content type="html"><![CDATA[<p>俗话说&#8221;工欲善其事，必先利其器&#8221;,Eclipse Kepler已支持Java 8,可以下载官方提供的<a href="http://eclipse.org/downloads/index-java8.php">Java™ 8 Support版本</a>版本来使用此功能。已经下载的Eclipse Kepler SR2也可以通过安装插件的方式来支持 Java 8，具体步骤如下：</p>
-
-<p><strong><em>下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html">Java 8</a>并确保你的Eclipse版本是Kepler SR2。</br></em></strong></p>
-
-<p> 选择菜单：”Help > Eclipse Marketplace…”。</br>
- 在搜索框中输入”Java 8 Kepler”。
- 安装<a href="http://marketplace.eclipse.org/content/java-8-support-eclipse-kepler-sr2">Java&nbsp;8 support for
- Eclipse&nbsp;Kepler&nbsp;SR2</a>插件。</br>
- 安装其他可选插件：</br>
- Java EE扩展支持：<a href="http://marketplace.eclipse.org/content/java-8-facet-web-tools-eclipse-kepler-sr2">Java 8 Facet for Web Tools for Eclipse Kepler SR2</a></br>
- Maven扩展支持：<a href="http://marketplace.eclipse.org/content/java%E2%84%A2-8-support-m2e-eclipse-kepler">Java 8 support for m2e for Eclipse Kepler SR2</a></p>
-
-<p><img src="http://renpengben.github.io/images/post-image/java8-marketplace.png">
-</br>
-<strong><em>多版本JDK共存问题</em></strong>
-</br>
-平常开发环境使用JDK7，如果又要使用JDK8做一些学习测试，那么可以在eclipse.ini文件中指定-vm参数，JAVA_HOME还是使用JDK7相互之间不影响。
-</br></p>
-
-<pre>
--vm
-C:/Program Files (x86)/Java/jdk1.8.0_05/bin/javaw.exe
-</pre>
-
-
-<p><strong><em>参考资料:</em></strong>
-</br>
-<a href="http://www.eclipse.org/downloads/java8/">http://www.eclipse.org/downloads/java8/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[《Java 7 Concurrency Cookbook 读书笔记》基本线程同步]]></title>
-    <link href="http://renpengben.github.io/blog/2014/05/24/basic-thread-synchronization/"/>
-    <updated>2014-05-24T22:21:33+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/05/24/basic-thread-synchronization</id>
-    <content type="html"><![CDATA[<pre><code>临界区是访问一个共享资源在同一时间不能被超过一个线程执行的代码块。
-</code></pre>
-
-<p><strong>同步方法</strong></p>
-
-<pre><code>每个方法声明为synchronized是一个临界区。
-synchronized关键字来保护访问的代码块，替换在整个方法上使用synchronized关键字。
-一般使用this关键字引用执行该方法的对象。
-
-synchronized (this) {
-// Java code
-}
-</code></pre>
-
-<p><strong>在同步的类里安排独立属性</strong></p>
-
-<pre><code>当使用synchronized关键字来保护代码块时，必须通过一个对象的引用作为参数。
-通常，使用this关键字来引用执行该方法的对象，当有多个共享属性时可以创建多个独立属性，
-保证每个共享变量同步访问。
-</code></pre>
-
-<p><strong>在同步代码中使用条件</strong></p>
-
-<pre><code>Java在Object对象中提供wait()，notify()，和notifyAll() 方法的实现。一个线程可以在
-synchronized代码块中调用wait()方法。如果在synchronized代码块外部调用wait()方法，
-JVM会抛出IllegalMonitorStateException异常。
-当线程调用wait()方法，JVM让这个线程睡眠，并且释放控制synchronized代码块的对象，
-这样，虽然它正在执行但允许其他线程执行由该对象保护的其他synchronized代码块。
-为了唤醒线程，你必须在由相同对象保护的synchronized代码块中调用notify()或notifyAll()方法。
-</code></pre>
-
-<p><strong>使用Lock同步代码块</strong></p>
-
-<pre><code>Lock 接口比synchronized关键字提供更多额外的功能。新功能之一是实现的tryLock()方法。
-这种方法试图获取锁的控制权并且如果它不能获取该锁，是因为其他线程在使用这个锁，
-它将返回这个锁。使用synchronized关键字，当线程A试图执行synchronized代码块，
-如果线程B正在执行它，那么线程A将阻塞直到线程B执行完synchronized代码块。
-使用锁，你可以执行tryLock()方法，这个方法返回一个 Boolean值表示，
-是否有其他线程正在运行这个锁所保护的代码。  
-
-Lock接口允许读写操作分离。
-Lock接口比synchronized关键字提供更好的性能。
-
-private final Lock lock=new ReentrantLock();
-//获取锁
-lock.lock();
-try {
-
-   } catch (InterruptedException e) {
- }finally { 
-//释放锁
-lock.unlock();
- }
-
-Lock 接口（和ReentrantLock类）包含其他方法来获取锁的控制权，那就是tryLock()方法。
-这个方法与lock()方法的最大区别是，如果一 个线程调用这个方法不能获取Lock接口的控制权
-时，将会立即返回并且不会使这个线程进入睡眠。这个方法返回一个boolean值，
-true表示这个线程 获取了锁的控制权，false则表示没有。
-
-ReentrantLock锁可重入。
-</code></pre>
-
-<p><strong>使用读/写锁同步数据访问</strong></p>
-
-<pre><code>ReadWriteLock接口和唯一一个实现它的ReentrantReadWriteLock类。
-这个类提供两把锁，一把用于读操作和一把用于写操作。同时可以有多个线程执行读操作，
-但只有一个线程可以执行写操作。当一个线程正在执行一个写操作，不可能有任何线程执行读操作。
-
-private ReadWriteLock lock=new ReentrantReadWriteLock();
-
-//读操作锁
-private void read(){
-
-lock.readLock().lock();
-//read code
-lock.readLock().unlock();
-
-}
-//写操作锁
-private void write(){
-lock.writeLock().lock();
-//write code
-lock.writeLock().unlock();
-}
-</code></pre>
-
-<p><strong>修改Lock的公平性</strong></p>
-
-<pre><code>在ReentrantLock类和 ReentrantReadWriteLock类的构造器中，允许一个名为fair的boolean
-类型参数， 默认值为 false。
-当多个线程等待一把锁时，这个锁必须选择一个进入临界区，当fair为false时这个选择没有标准
-即非公平模式。
-当这个值为true时，锁将选择等待时间最长的进入临界区即公平模式。由于tryLock()方法并不会
-使线程进入睡眠，因此此参数不影响它。
-</code></pre>
-
-<p><strong>在Lock中使用多条件</strong></p>
-
-<pre><code>Condition条件变量，等待某种条件的发生，条件发生后，可以唤醒等待在该条件上的一个线程，
-或所有线程。条件变量要与锁一起协同工作。
-
- ReentrantLock lock = new ReentrantLock(); 
- Condition condition = lock.newCondition(); 
-
- condition.await();//满足某条件时等待  Object.wait();
- condition.signal(); //唤醒等待的其中一个线程  Object.notify(); 
- condition.signalAll(); //唤醒等待的所有线程   Object.notifyAll();
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[《Java 7 Concurrency Cookbook 读书笔记》线程管理]]></title>
-    <link href="http://renpengben.github.io/blog/2014/05/10/thread-management/"/>
-    <updated>2014-05-10T23:16:49+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/05/10/thread-management</id>
-    <content type="html"><![CDATA[<p><strong>java中创建线程有2种方式：</strong></p>
-
-<pre><code>  1.继承Thread类，覆盖run方法。
-  2.构建实现Runnable接口类，然后创建一个Thread类对象传入一个Runnable对象作为构造参数。
-</code></pre>
-
-<p><strong>获取和设置线程信息：</strong></p>
-
-<pre><code> ID: 每个线程的独特标识。
- Name: 线程的名称。
- Priority: 线程对象的优先级。优先级别在1-10之间，1是最低级，10是最高级。
- Status: 线程的状态。
- Tips:
- setPriority() 方法会抛出 IllegalArgumentException 异常，如果设置的优先级不是在1-10之间。
- 在Java中，线程只能有这6种中的一种状态：  new, runnable, blocked, waiting,
- time waiting, 或 terminated。
-</code></pre>
-
-<p><strong>线程的中断：</strong></p>
-
-<pre><code>   Thread类有一个boolean类型的属性表明线程是否被中断，当调用线程的interrupt()方法,
-   此属性被设置为true,isInterrupted() 方法仅返回属性值。
-
-   isInterrupted()和interrupted()区别:
-   isInterrupted()不会改变interrupted属性值，interrupted()会设置为false，
-   interrupted() 方法是一个静态方法，建议使用isInterrupted()方法。
-</code></pre>
-
-<p><strong>操作线程的中断机制</strong></p>
-
-<pre><code>   在Thread类的run方法中捕获InterruptedException异常来控制线程的中断。
-
-    private void do() throws InterruptedException
-    { 
-     //....
-     if (Thread.interrupted()) {
-    throw new InterruptedException();
-     }
-     }
-      @Override
-      public void run() {
-       try {
-      do();
-      } catch (InterruptedException e) {
-
-    } 
-    }
-</code></pre>
-
-<p><strong>线程的睡眠与恢复</strong></p>
-
-<pre><code>  Thread类的 sleep(long millis) 方法 。表示线程休眠millis毫秒。
-  TimeUnit枚举元素的sleep(long millis)方法同样能使当前线程睡眠millis毫秒。
-  2种线程休眠的方法都会抛出InterruptedException异常。
-</code></pre>
-
-<p><strong>等待线程的终结</strong></p>
-
-<pre><code>  当前线程调用某个线程的join()方法，当前线程会暂停直到被调用线程执行完成。
-  join (long milliseconds)
-  join (long milliseconds, long nanos)
-
-  ex：thread1调用thread2.join(1000)，那么thread1暂停运行，
-  直到一下其中一个条件发生，join方法返回：
-  thread2结束运行
-  1000毫秒过去了
-</code></pre>
-
-<p><strong>守护线程的创建和运行</strong></p>
-
-<pre><code>  在Java中有两类线程：用户线程 (User Thread)、守护线程 (Daemon Thread)。
-
-  守护线程，是指在程序运行的时候在后台提供一种通用服务的线程，
-  比如垃圾回收线程就是一个很称职的守护者，并且这种线程并不属于程序中不可或缺的部分。
-  因此，当所有的非守护线程结束时，程序也就终止了，同时会杀死进程中的所有守护线程。
-  反过来说，只要任何非守护线程还在运行，程序就不会终止。
-
-  Thread类的 setDaemon() 方法设置线程为守护线程，此方法必须在调用start()方法之前调用。
-  isDaemon() 方法来检查线程是否是守护线程（方法返回 true) 或者是用户线程 (方法返回 false)。
-</code></pre>
-
-<p><strong>处理线程非检测异常</strong></p>
-
-<pre><code>  Java中有2种异常：
-  检测异常(Checked Exceptions)：这种异常必须强制捕获或者继续抛出异常（throws）。
-  非检测异常(Unchecked Exceptions)：这种异常无需强制捕获。
-  在线程对象run()方法中抛出一个检测异常必须捕获，因为run()方法不接受throws抛出异常。
-
-  在Java处理Thread中的非检测异常类，需要实现UncaughtExceptionHandler接口。
-  public class ExceptionHandler implements UncaughtExceptionHandler {
-
-  @Override
-  public void uncaughtException(Thread t, Throwable e) {
-
- }
- }
- 在线程启动之前设置setUncaughtExceptionHandler(new ExceptionHandler());
-
-当在一个线程里抛出一个异常，但是这个异常没有被捕获（非检查异常）， 
-JVM 检查线程的相关方法是否有设置一个未捕捉异常的处理者 。
-如果有JVM使用Thread对象和Exception作为参数调用此方法 。
-如果线程没有捕捉未捕获异常的处理者， 那么JVM会把异常的 stack trace 写入操控台并结束任务。
-静态方法 setDefaultUncaughtExceptionHandler() 为应用里的所有线程对象建立异常handler 。
-JVM检测异常3种潜在的Handler：Thread UncaughtExceptionHandler-&gt;
-Thread Group UncaughtExceptionHandler-&gt;Default Thread 
-UncaughtExceptionHandler-&gt;print stack trace
-</code></pre>
-
-<p><strong>本地线程变量</strong></p>
-
-<pre><code>ThreadLocal类为线程的变量存储独立的属性值。
-ThreadLocal&lt;Object&gt; threadLocal = new ThreadLocal&lt;Object&gt;() {
-    //初始值
-    protected Object initialValue() {
-        return new Object();
-    };
-
-    public void set(Object value) {
-    };
-
-    public Object get() {
-        return new Object();
-    };
-    //移除此线程局部变量的值。
-    public void remove() {
-    };
-
-}; 
-InheritableThreadLocal 类提供线程创建线程的值的遗传性 。
-如果线程A有一个本地线程变量，然后它创建了另一个线程B，
-那么线程B将有与A相同的本地线程变量值。
-你可以覆盖 childValue() 方法来初始子线程的本地线程变量的值。
-它接收父线程的本地线程变量作为参数。
-InheritableThreadLocal&lt;Object&gt; inheritableThreadLocal = 
-new InheritableThreadLocal&lt;Object&gt;() {
-    protected Object childValue(Object parentValue) {
-        return parentValue;
-    };
-};
-</code></pre>
-
-<p><strong>线程组</strong></p>
-
-<pre><code>Java提供ThreadGroup类来组织线程。 
-ThreadGroup对象可以由Thread对象组成和由另外的ThreadGroup对象组成,生成线程树结构。
-ThreadGroup threadGroup = new ThreadGroup(group name);
-Thread thread=new Thread(threadGroup, runnableimpl);
-activeCount() 和 enumerate() 方法来获取线程个数和与ThreadGroup对象关联的线程的列表。
-</code></pre>
-
-<p><strong>处理线程组内非检测异常</strong></p>
-
-<pre><code>public class MyThreadGroup extends ThreadGroup {
-public MyThreadGroup(String name) {
-super(name);
-}
-@Override
-public void uncaughtException(Thread t, Throwable e) {
-//覆盖此方法
-}
-}
-</code></pre>
-
-<p><strong>线程工厂</strong></p>
-
-<pre><code>ThreadFactory线程工厂。
-ThreadFactory 接口只有一个方法是newThread。它接收 Runnable 对象作为参数并返回一个 Thread对象。
-public class MyThreadFactory implements ThreadFactory {
-@Override
-public Thread newThread(Runnable r) {
-    return new Thread(r);
-}
-}
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FragmentTabHost切换Fragment时避免重复加载UI]]></title>
-    <link href="http://renpengben.github.io/blog/2014/03/23/fragmenttabhost-fragment/"/>
-    <updated>2014-03-23T15:38:15+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/03/23/fragmenttabhost-fragment</id>
-    <content type="html"><![CDATA[<p><span>使用FragmentTabHost时，Fragment之间切换时每次都会调用onCreateView方法，导致每次Fragment的布局都重绘，无法保持Fragment原有状态。</span></p>
-
-<p><span>解决办法：在Fragment onCreateView方法中缓存View。<span></p>
-
-<pre><code>    //缓存Fragment view
-    private View rootView;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
-    Bundle     savedInstanceState) {
-    if(rootView==null){
-        rootView=inflater.inflate(R.layout.tab_fragment, null);
-    }
-    //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，
-    //要不然会发生这个rootview已经有parent的错误。    
-    ViewGroup parent = (ViewGroup) rootView.getParent();
-    if (parent != null) {
-        parent.removeView(rootView);
-    } 
-    return rootView;
-    }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress写博客]]></title>
-    <link href="http://renpengben.github.io/blog/2014/03/22/octopress-write-blog/"/>
-    <updated>2014-03-22T16:18:36+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/03/22/octopress-write-blog</id>
-    <content type="html"><![CDATA[<p> <h4> 1.安装ruby</h4>
- <h4> 2.安装Octopress</h4>
- 上面2步网上很多资料<a href="http://blog.segmentfault.com/yaashion_xiang/1190000000364677">传送门</a>
- <h4> 3.部署到github</h4></p>
-
-<pre><code>  rake setup_github_pages
-</code></pre>
-
-<p>   按照提示输入github用户名密码，输入以下命令部署博客,push到github的master分支</p>
-
-<pre><code>  rake generate
-  rake deploy
-</code></pre>
-
-<!--more-->
-
-
-<p>
-   将source单独push到github的source分支下</p>
-
-<pre><code>  git add .
-  git commit -m 'Initial source commit'
-  git push origin source
-</code></pre>
-
-<p>   部署前可以在本地预览，输入rake preview之后在浏览器输入<a href="http://localhost:4000/">http://localhost:4000/</a>
-  <h4> 4.写博客</h4></p>
-
-<pre><code>  rake new_post["myTitle"]
-</code></pre>
-
-<p>   文章生成在目录下的source/_posts目录下。文章是markdown格式的。
-   然后使用支持markdown语法的编辑器就可以形如流水的写博客。
-   此博客是在Ubuntu ReText写的。
- <h4>5.代码高亮</h4>
- <pre>  <code>包含代码 </code> </pre></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Fixnum</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">prime?</span>
-</span><span class='line'>    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p></p>
-]]></content>
-  </entry>
-  
-</feed>
+</div>
+
+</article>
+
+	<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style" style="margin-top:10px;">
+	<a class="jiathis_button_tsina">新浪微博</a>
+	<a class="jiathis_button_ydnote">有道云笔记</a>
+	<a class="jiathis_button_googleplus">Google+</a>
+	<a class="jiathis_button_pocket">Pocket</a>
+	<a class="jiathis_button_qzone">QQ空间</a>
+	<a class="jiathis_button_linkedin">LinkedIn</a>
+	<a class="jiathis_button_fb">Facebook</a>
+	<a class="jiathis_button_renren">人人网</a>
+	<a class="jiathis_button_weixin">微信</a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
+
+
+  <section>
+    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread" ></div>
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"renpeng"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- Duoshuo Comment END -->
+</div>
+  </section>
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Renpeng -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

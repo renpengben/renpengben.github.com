@@ -93,6 +93,615 @@
   
 
 
+<time datetime="2014-06-10T20:06:56+08:00" data-updated="true" itemprop="datePublished">Jun 10<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java8/'>java8</a>
+
+
+</div>
+		
+ 
+        <a href="/blog/2014/06/10/lambda-expressions/#comments"></a>
+         
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/06/10/lambda-expressions/" itemprop="url">Java8新特性之Lambda表达式</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h2>什么是Lambda表达式？</h2>
+
+<p>   在一般数学计算中lambda表达式就是一个函数，为部分或者所有输入值指定一个输出值，在java中Lambad表达式是以函数的概念引入，可以理解为一种语法更加紧凑的匿名方法，并且允许省略修饰符，返回类型并且某种情况下的参数类型。
+</br>
+ <strong><em>语法:</em></strong>
+ </br>
+  lambda基本语法:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>   <span class="o">(</span><span class="n">parameters</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">expression</span>
+</span><span class='line'>   <span class="n">or</span>
+</span><span class='line'>   <span class="o">(</span><span class="n">parameters</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">statements</span><span class="o">;</span> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p><strong><em>Examples:</em></strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span><span class="kt">int</span> <span class="n">y</span><span class="o">)-&gt;</span><span class="n">x</span><span class="o">+</span><span class="n">y</span>   <span class="c1">//取整数x,y并返回它们的和</span>
+</span><span class='line'>  <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>  <span class="c1">//取整数x,y并返回它们的差                                </span>
+</span><span class='line'>  <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span>  <span class="c1">//不取任何值，直接返回42                                         </span>
+</span><span class='line'>  <span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="c1">//取字符串s，在控制台打印，不返回任何值。             </span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">-&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span>  <span class="c1">//取一个数字，返回它的2倍                                      </span>
+</span><span class='line'>  <span class="n">c</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">c</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span> <span class="k">return</span> <span class="n">s</span><span class="o">;</span> <span class="o">}</span><span class="c1">//取集合c，清空它，然后返回它清空前的大小</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+ <strong><em>语法说明</em></strong>
+   <pre>
+   1.参数类型可以显式声明(ex.1,4)或者隐式推断(ex.2,5,6),显式声明和隐式推断参数不允许用在同一个lambda表达式。
+   2.lambda body可以是一个block({}大括号包含代码块ex.6)或者是一个表达式(ex.1-5)。block body可以返回值(ex.6)
+   或者什么都不返回()。
+   3.如果lambda body是一个表达式，它也可能返回值(ex.1,2,3,5)或者什么都不返回(ex.4)。
+   4.隐式推断可以省略()(ex.5,6)。
+   5.ex.6 lambda能操作一个集合，同样的，根据上下文给定的参数，如果一个参数a拥有size和clear方法，
+   它也能操作并返回其类型的值。
+   </pre></p>
+
+<p><strong><em>例子</em></strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>   <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculator</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">interface</span> <span class="nc">IntegerMath</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="nf">operation</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">operateBinary</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">,</span> <span class="n">IntegerMath</span> <span class="n">op</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="na">operation</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Calculator</span> <span class="n">myApp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Calculator</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">IntegerMath</span> <span class="n">addition</span> <span class="o">=</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span><span class="c1">//隐式推断类型</span>
+</span><span class='line'>        <span class="n">IntegerMath</span> <span class="n">subtraction</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="o">;</span><span class="c1">//显式声明类型</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;40 + 2 = &quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="n">myApp</span><span class="o">.</span><span class="na">operateBinary</span><span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">addition</span><span class="o">));</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;20 - 10 = &quot;</span> <span class="o">+</span>
+</span><span class='line'>            <span class="n">myApp</span><span class="o">.</span><span class="na">operateBinary</span><span class="o">(</span><span class="mi">20</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="n">subtraction</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong><em>注意问题</em></strong>
+1、一个可以接受Lambda表达式的接口只能有一个方法，否则在编译时将抛出异常。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">interface</span> <span class="nc">IntegerMath</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">//如果IntegerMath接口需要接受Lambda表达式，只能定义一个方法。</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="nf">operation</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+2、为了显示的说明某接口是可使用lambda表达式， 可以使用@FunctionalInterface注解该接口。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="nd">@FunctionalInterface</span>
+</span><span class='line'> <span class="kd">interface</span> <span class="nc">IntegerMath</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="nf">operation</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h2>为什么Java要增加lambda表达式？</h2>
+
+<p>Lambda表达式，也叫做闭包，是一个在很多现代程序语言中十分流行的特性。在众多不同的原因中当中，Java平台最迫切的原因之一是lambda表达式能简化多线程环境下集合的分布式处理。
+</br>
+<strong><em>1.内部循环和外部循环</em></strong>
+</br></p>
+
+<p>  常规的外部循环:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">number</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">number</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+这种情况简单的存在3个缺点:</p>
+
+<p>1.只能顺序处理List中的元素</p>
+
+<p>2.不能充分利用多核CPU</p>
+
+<p>3.不利于编译器优化
+</br>
+使用Lamdba表达式内部循环：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">Integer</span> <span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">value</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+1.不一定需要顺序处理List中的元素，顺序可以不确定</p>
+
+<p>2.可以并行处理，充分利用多核CPU的优势</p>
+
+<p>3.有利于JIT编译器对代码进行优化
+</br></p>
+
+<p><strong><em>2、传递行为，而不仅仅是传值</em></strong>
+传值局限性的场景</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">sumAll</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">number</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+sumAll算法很简单，完成的是将List中所有元素相加。某一天如果需要增加一个对List中所有偶数求和的方法sumAllEven，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">sumAllEven</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">number</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+又有一天，需要增加第三个方法：对List中所有大于3的元素求和，那是不是继续加下面的方法呢?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">sumAllEven</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">number</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">number</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+比较这三个方法，发现了一个很明显的“代码臭味”—— 代码重复。
+如果使用Lambda表达式，那么需要Lambda表达式中的谓词（Predicate）发挥作用：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">sumAll</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="o">,</span> <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">number</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">number</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sumAll</span><span class="o">(</span><span class="n">numbers</span><span class="o">,</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="n">sumAll</span><span class="o">(</span><span class="n">numbers</span><span class="o">,</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'><span class="n">sumAll</span><span class="o">(</span><span class="n">numbers</span><span class="o">,</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+</br>
+Preducate源码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     * Evaluates this predicate on the given argument.</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * @param t the input argument</span>
+</span><span class='line'><span class="cm">     * @return {@code true} if the input argument matches the predicate,</span>
+</span><span class='line'><span class="cm">     * otherwise {@code false}</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="nf">test</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+</span><span class='line'><span class="o">.....</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+<strong><em>3、Consumer与Loan Pattern</em></strong>
+</br>
+比如有一个资源类Resource：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Resource</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="nf">Resource</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Opening resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Operating on resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">dispose</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Disposing resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="c1">//调用</span>
+</span><span class='line'><span class="n">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="o">();</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">resource</span><span class="o">.</span><span class="na">operate</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">resource</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+但是有一个问题，如果很多地方都要用到这个资源，那么就存在很多段类似这样的代码，这很明显违反了DRY（Don&rsquo;t Repeat It Yourself）原则。而且如果某位程序员由于某些原因忘了用try/finally处理资源，那么很可能导致内存泄漏。那咋办呢？Java 8提供了一个Consumer接口，代码改写为如下：
+因为对资源对象resource执行operate方法时可能抛出RuntimeException，所以需要在finally语句块中释放资源，防止可能的内存泄漏。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Resource</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="nf">Resource</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Opening resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operate</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Operating on resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">dispose</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Disposing resource&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">withResource</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">consumer</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">resource</span><span class="o">);</span>
+</span><span class='line'>      <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">resource</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">Resource</span><span class="o">.</span><span class="na">withResource</span><span class="o">(</span><span class="n">resource</span> <span class="o">-&gt;</span> <span class="n">resource</span><span class="o">.</span><span class="na">operate</span><span class="o">());</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nl">Console:</span>
+</span><span class='line'><span class="n">Opening</span> <span class="n">resource</span>
+</span><span class='line'><span class="n">Operating</span> <span class="n">on</span> <span class="n">resource</span>
+</span><span class='line'><span class="n">Disposing</span> <span class="n">resource</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+外部要访问Resource，只能通过withResource方法了，而且也完全杜绝了因人为疏忽而导致的潜在内存泄漏。
+</br>
+<strong><em>参考资料:</em></strong>
+</br>
+<a href="http://www.lambdafaq.org/">http://www.lambdafaq.org/</a>
+</br>
+<a href="http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#use-case">http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#use-case</a>
+</br>
+<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions">http://java.dzone.com/articles/why-we-need-lambda-expressions</a>
+</br>
+<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a>
+</br>
+<a href="http://www.ituring.com.cn/article/22143">http://www.ituring.com.cn/article/22143</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-10T20:00:34+08:00" data-updated="true" itemprop="datePublished">Jun 10<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java8/'>java8</a>
+
+
+</div>
+		
+ 
+        <a href="/blog/2014/06/10/ecnew-java8/#comments"></a>
+         
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/06/10/ecnew-java8/" itemprop="url">Java 8新特性简介</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p> <h4>Java Programming Language(Java语言)</h4>
+   1.<a href="/blog/2014/06/10/lambda-expressions/">Lambda Expressions(Lambad表达式)</a>
+   </br>
+   2.Method References(方法引用)
+   </br>
+   3.Default Methods(默认方法)
+   </br>
+   4.Repeating Annotations(重复注解)
+   </br>
+   5.Type Annotations(类型注解)
+   </br>
+   6.Improved type inference(改进类型推断)
+   </br>
+   7.Method parameter reflection(方法参数反射)
+ <h4>Collections(集合)</h4>
+   1.New java.util.stream package(新包java.util.stream)
+   </br>
+   2.Performance Improvement for HashMaps with Key Collisions(HashMaps Key碰撞的性能改进)
+   </br>
+   <strong><em>未完待续&hellip;</em></strong>
+   </br>
+   <strong><em>参考资料:</em></strong>
+</br>
+ <a href="http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html">http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-10T19:51:11+08:00" data-updated="true" itemprop="datePublished">Jun 10<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/java8/'>java8</a>
+
+
+</div>
+		
+ 
+        <a href="/blog/2014/06/10/eclipse-kepler-java8/#comments"></a>
+         
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/06/10/eclipse-kepler-java8/" itemprop="url">Eclipse Kepler搭建Java8开发环境</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>俗话说&#8221;工欲善其事，必先利其器&#8221;,Eclipse Kepler已支持Java 8,可以下载官方提供的<a href="http://eclipse.org/downloads/index-java8.php">Java™ 8 Support版本</a>版本来使用此功能。已经下载的Eclipse Kepler SR2也可以通过安装插件的方式来支持 Java 8，具体步骤如下：</p>
+
+<p><strong><em>下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html">Java 8</a>并确保你的Eclipse版本是Kepler SR2。</br></em></strong></p>
+
+<p> 选择菜单：”Help > Eclipse Marketplace…”。</br>
+ 在搜索框中输入”Java 8 Kepler”。
+ 安装<a href="http://marketplace.eclipse.org/content/java-8-support-eclipse-kepler-sr2">Java&nbsp;8 support for
+ Eclipse&nbsp;Kepler&nbsp;SR2</a>插件。</br>
+ 安装其他可选插件：</br>
+ Java EE扩展支持：<a href="http://marketplace.eclipse.org/content/java-8-facet-web-tools-eclipse-kepler-sr2">Java 8 Facet for Web Tools for Eclipse Kepler SR2</a></br>
+ Maven扩展支持：<a href="http://marketplace.eclipse.org/content/java%E2%84%A2-8-support-m2e-eclipse-kepler">Java 8 support for m2e for Eclipse Kepler SR2</a></p>
+
+<p><img src="/images/post-image/java8-marketplace.png">
+</br>
+<strong><em>多版本JDK共存问题</em></strong>
+</br>
+平常开发环境使用JDK7，如果又要使用JDK8做一些学习测试，那么可以在eclipse.ini文件中指定-vm参数，JAVA_HOME还是使用JDK7相互之间不影响。
+</br></p>
+
+<pre>
+-vm
+C:/Program Files (x86)/Java/jdk1.8.0_05/bin/javaw.exe
+</pre>
+
+
+<p><strong><em>参考资料:</em></strong>
+</br>
+<a href="http://www.eclipse.org/downloads/java8/">http://www.eclipse.org/downloads/java8/</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2014-05-24T22:21:33+08:00" data-updated="true" itemprop="datePublished">May 24<span>th</span>, 2014</time></div>
 		<div class="tags">
 
