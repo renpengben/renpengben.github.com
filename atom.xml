@@ -4,7 +4,7 @@
   <title><![CDATA[Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-06-16T21:14:31+08:00</updated>
+  <updated>2014-06-16T21:20:07+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -12,6 +12,115 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java8新特性之改进推断类型]]></title>
+    <link href="http://renpengben.github.io/blog/2014/06/16/improved-type-inference/"/>
+    <updated>2014-06-16T21:17:43+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/06/16/improved-type-inference</id>
+    <content type="html"><![CDATA[<p>泛型是Java SE 1.5的新特性，泛型的本质是参数化类型。
+一般泛型的定义：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">People</span><span class="o">&gt;</span> <span class="n">box</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">People</span><span class="o">&gt;();</span>
+</span><span class='line'><span class="n">box</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">People</span><span class="o">());</span>
+</span><span class='line'><span class="n">People</span> <span class="n">people</span> <span class="o">=</span><span class="n">box</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+泛型的优点很明显第一提高了类型的安全，第二消除强制类型的转换，但是尴尬的地方就是每次定义时都要写明泛型的类型，这样显示指定感觉有些冗长。
+Java7的泛型类型推断改进：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span> <span class="c1">//注意后面的&quot;&lt;&gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+上述Map的定义编译器会根据变量声明时的泛型类型自动推断出实例化HashMap时的泛型类型。注意new HashMap后面的“&lt;>”，只有加上这个“&lt;>”才表示是自动类型推断，否则就是非泛型类型的HashMap，并且在使用编译器编译源代码时会给出一个警告提示。
+</br>
+Java SE 7在创建泛型实例时的类型推断是有限制的：</br>
+只有构造器的参数化类型在上下文中被显著的声明了，才可以使用类型推断，否则不行。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//下面addAll方法无法通过编译，由于addAll期望获得Collection&lt;? extends String&gt;类型的参数</span>
+</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Java8泛型类型推断改进：</p>
+
+<p>1.支持通过方法上下文推断泛型目标类型。</p>
+
+<p>2.支持在方法调用链路当中，泛型类型推断传递到最后一个方法。
+官方例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">List</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kd">static</span> <span class="o">&lt;</span><span class="n">Z</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Z</span><span class="o">&gt;</span> <span class="n">nil</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">};</span>
+</span><span class='line'>   <span class="kd">static</span> <span class="o">&lt;</span><span class="n">Z</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Z</span><span class="o">&gt;</span> <span class="n">cons</span><span class="o">(</span><span class="n">Z</span> <span class="n">head</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Z</span><span class="o">&gt;</span> <span class="n">tail</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">};</span>
+</span><span class='line'>   <span class="n">E</span> <span class="nf">head</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//通过方法赋值的目标参数来自动推断泛型的类型</span>
+</span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">nil</span><span class="o">();</span>
+</span><span class='line'><span class="c1">//而不是显示的指定类型</span>
+</span><span class='line'><span class="c1">//List&lt;String&gt; l = List.&lt;String&gt;nil();</span>
+</span><span class='line'><span class="c1">//通过前面方法参数类型推断泛型的类型</span>
+</span><span class='line'><span class="n">List</span><span class="o">.</span><span class="na">cons</span><span class="o">(</span><span class="mi">42</span><span class="o">,</span> <span class="n">List</span><span class="o">.</span><span class="na">nil</span><span class="o">());</span>
+</span><span class='line'><span class="c1">//而不是显示的指定类型</span>
+</span><span class='line'><span class="c1">//List.cons(42, List.&lt;Integer&gt;nil());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+所以上面addAll出错的例子在Java8中依据方法参数类型推断就不会出错了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">//下面代码Java8通过编译</span>
+</span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//根据add方法中的&quot;A&quot;参数推断new ArrayList&lt;&gt;()的类型为new ArrayList&lt;String&gt;()</span>
+</span><span class='line'><span class="n">list</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java8新特性之重复注解]]></title>
@@ -1561,11 +1670,11 @@ Optional类的Javadoc描述如下：
     <content type="html"><![CDATA[<p> <h4>Java Programming Language(Java语言)</h4>
    1.<a href="http://renpengben.github.io/blog/2014/06/10/lambda-expressions/">Lambda Expressions(Lambad表达式)</a>
    </br>
-   2.Method References(方法引用)
+   2.<a href="http://renpengben.github.io/blog/2014/06/16/method-references/">Method References(方法引用)</a>
    </br>
-   3.Default Methods(默认方法)
+   3.<a href="http://renpengben.github.io/blog/2014/06/16/default-m-methods/">Default Methods(默认方法)</a>
    </br>
-   4.Repeating Annotations(重复注解)
+   4.<a href="http://renpengben.github.io/blog/2014/06/16/repeating-annotations/">Repeating Annotations(重复注解)</a>
    </br>
    5.Type Annotations(类型注解)
    </br>

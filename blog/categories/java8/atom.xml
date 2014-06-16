@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java8 | Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-06-16T21:14:31+08:00</updated>
+  <updated>2014-06-16T21:20:07+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -12,6 +12,69 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java8新特性之改进推断类型]]></title>
+    <link href="http://renpengben.github.io/blog/2014/06/16/improved-type-inference/"/>
+    <updated>2014-06-16T21:17:43+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/06/16/improved-type-inference</id>
+    <content type="html"><![CDATA[<p>泛型是Java SE 1.5的新特性，泛型的本质是参数化类型。
+一般泛型的定义：
+<code>java
+List&lt;People&gt; box = new ArrayList&lt;People&gt;();
+box.add(new People());
+People people =box.get(0);
+</code>
+泛型的优点很明显第一提高了类型的安全，第二消除强制类型的转换，但是尴尬的地方就是每次定义时都要写明泛型的类型，这样显示指定感觉有些冗长。
+Java7的泛型类型推断改进：
+<code>java
+Map&lt;String, String&gt; map = new HashMap&lt;&gt;(); //注意后面的"&lt;&gt;"
+</code>
+上述Map的定义编译器会根据变量声明时的泛型类型自动推断出实例化HashMap时的泛型类型。注意new HashMap后面的“&lt;>”，只有加上这个“&lt;>”才表示是自动类型推断，否则就是非泛型类型的HashMap，并且在使用编译器编译源代码时会给出一个警告提示。
+</br>
+Java SE 7在创建泛型实例时的类型推断是有限制的：</br>
+只有构造器的参数化类型在上下文中被显著的声明了，才可以使用类型推断，否则不行。
+<code>java
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("A");
+//下面addAll方法无法通过编译，由于addAll期望获得Collection&lt;? extends String&gt;类型的参数
+list.addAll(new ArrayList&lt;&gt;());
+</code></p>
+
+<p>Java8泛型类型推断改进：</p>
+
+<p>1.支持通过方法上下文推断泛型目标类型。</p>
+
+<p>2.支持在方法调用链路当中，泛型类型推断传递到最后一个方法。
+官方例子：
+``` java
+class List<E> {</p>
+
+<p>   static <Z> List<Z> nil() { &hellip; };
+   static <Z> List<Z> cons(Z head, List<Z> tail) { &hellip; };
+   E head() { &hellip; }
+}</p>
+
+<p>//通过方法赋值的目标参数来自动推断泛型的类型
+List<String> l = List.nil();
+//而不是显示的指定类型
+//List<String> l = List.<String>nil();
+//通过前面方法参数类型推断泛型的类型
+List.cons(42, List.nil());
+//而不是显示的指定类型
+//List.cons(42, List.<Integer>nil());</p>
+
+<p><code>
+所以上面addAll出错的例子在Java8中依据方法参数类型推断就不会出错了。
+</code> java
+//下面代码Java8通过编译
+List<String> list = new ArrayList&lt;>();
+list.add(&ldquo;A&rdquo;);
+//根据add方法中的"A"参数推断new ArrayList&lt;>()的类型为new ArrayList<String>()
+list.addAll(new ArrayList&lt;>());
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java8新特性之重复注解]]></title>
@@ -1054,38 +1117,6 @@ try {
 <a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a>
 </br>
 <a href="http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html">http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java 8新特性简介]]></title>
-    <link href="http://renpengben.github.io/blog/2014/06/10/ecnew-java8/"/>
-    <updated>2014-06-10T20:00:34+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/06/10/ecnew-java8</id>
-    <content type="html"><![CDATA[<p> <h4>Java Programming Language(Java语言)</h4>
-   1.<a href="http://renpengben.github.io/blog/2014/06/10/lambda-expressions/">Lambda Expressions(Lambad表达式)</a>
-   </br>
-   2.Method References(方法引用)
-   </br>
-   3.Default Methods(默认方法)
-   </br>
-   4.Repeating Annotations(重复注解)
-   </br>
-   5.Type Annotations(类型注解)
-   </br>
-   6.Improved type inference(改进类型推断)
-   </br>
-   7.Method parameter reflection(方法参数反射)
- <h4>Collections(集合)</h4>
-   1.New java.util.stream package(新包java.util.stream)
-   </br>
-   2.Performance Improvement for HashMaps with Key Collisions(HashMaps Key碰撞的性能改进)
-   </br>
-   <strong><em>未完待续&hellip;</em></strong>
-   </br>
-   <strong><em>参考资料:</em></strong>
-</br>
- <a href="http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html">http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html</a></p>
 ]]></content>
   </entry>
   
