@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java8 | Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-06-10T22:25:53+08:00</updated>
+  <updated>2014-06-16T21:14:31+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -12,6 +12,274 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java8新特性之重复注解]]></title>
+    <link href="http://renpengben.github.io/blog/2014/06/16/repeating-annotations/"/>
+    <updated>2014-06-16T21:12:22+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/06/16/repeating-annotations</id>
+    <content type="html"><![CDATA[<p>允许在同一类，属性，或方法多次使用同一个注解。</br>
+ java8之前也可以重复注解，但代码可读性不好，如下：
+``` java
+public @interface Authority {</p>
+
+<pre><code> String role();
+</code></pre>
+
+<p>}</p>
+
+<p>public @interface Authorities {</p>
+
+<pre><code>Authority[] value();
+</code></pre>
+
+<p>}</p>
+
+<p>public class RepeatAnnotationUseOldVersion {</p>
+
+<pre><code>@Authorities({@Authority(role="Admin"),@Authority(role="Manager")})
+public void doSomeThing(){
+}
+</code></pre>
+
+<p>}
+<code>
+ java8实现重复注解方式如下：
+</code> java
+@Repeatable(Authorities.class)
+public @interface Authority {</p>
+
+<pre><code> String role();
+</code></pre>
+
+<p>}</p>
+
+<p>public @interface Authorities {</p>
+
+<pre><code>Authority[] value();
+</code></pre>
+
+<p>}</p>
+
+<p>public class RepeatAnnotationUseNewVersion {</p>
+
+<pre><code>@Authority(role="Admin")
+@Authority(role="Manager")
+public void doSomeThing(){ }
+</code></pre>
+
+<p>}
+```
+java8创建重复注解Authority时，加上@Repeatable,指向存储注解Authorities，在使用时候，直接可以重复使用Authority注解,java8实现方式可读性比之前强。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java8新特性之默认方法]]></title>
+    <link href="http://renpengben.github.io/blog/2014/06/16/default-m-methods/"/>
+    <updated>2014-06-16T21:10:07+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/06/16/default-m-methods</id>
+    <content type="html"><![CDATA[<p>默认方法：简单的说接口可以有实现方法，而且不需要实现类去实现其方法。只需在方法名前面加个default关键字即可。
+``` java
+public interface DefaultMethod {</p>
+
+<pre><code>default void foo(){
+    System.out.println("调用DefaultMethod接口的默认方法foo");
+}
+</code></pre>
+
+<p>}</p>
+
+<p>public class DefaultMethodTest implements DefaultMethod {</p>
+
+<pre><code>public static void main(String[] args) {
+    DefaultMethodTest defaultMethodTest = new DefaultMethodTest();
+    defaultMethodTest.foo();// 调用DefaultMethod.foo
+
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h4>java8抽象类与接口对比</h4>
+
+<pre>
+相同点:
+      1.都是抽象类型。
+      2.都可以有实现方法（java 8 接口有default method）。
+      3.都可以不需要实现类或者继承者去实现所有方法。
+不同点:
+       1.抽象类不可以多重继承,接口可以。
+       2.抽象类是is-a的关系，接口表示是like-a关系。
+       3.接口中定义的变量默认是public static final 型，且必须给其初值，所以实现类中不能重新定义，也不能改变其值；
+         抽象类中的变量默认是 friendly 型，其值可以在子类中重新定义，也可以重新赋值。
+</pre>
+
+
+<h4>多重继承</h4>
+
+<p>如果一个类实现了两个接口，并且两个接口都用相同的签名定义了默认方法，这该怎么办？
+``` java
+public interface A {</p>
+
+<pre><code>default void foo() {
+    System.out.println("Calling A.foo()");
+
+}
+</code></pre>
+
+<p>}</p>
+
+<p>public interface B {</p>
+
+<pre><code>default void foo() {
+    System.out.println("Calling B.foo()");
+
+}
+</code></pre>
+
+<p>}</p>
+
+<p>public class AB implements A, B {</p>
+
+<p>}
+//Duplicate default methods named foo with the parameters () and () are inherited from the types B and A。
+<code>
+上面代码通不过编译：类AB从A,B接口继承了重复的默认方法foo。
+解决此问题AB类必须重写冲突方法:
+</code> java
+public class AB implements A, B {</p>
+
+<pre><code>@Override
+public void foo() {
+
+}
+</code></pre>
+
+<p>}
+<code>
+如果AB类想调用接口的默认方法，那么可以按照以下方式：
+</code> java</p>
+
+<pre><code>@Override
+public void foo() {
+    A.super.foo();
+}
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java8新特性之方法引用]]></title>
+    <link href="http://renpengben.github.io/blog/2014/06/16/method-references/"/>
+    <updated>2014-06-16T21:05:48+08:00</updated>
+    <id>http://renpengben.github.io/blog/2014/06/16/method-references</id>
+    <content type="html"><![CDATA[<p>方法引用其实是lambda表达式的一个简化写法，所引用的方法其实是lambda表达式的方法体实现。
+</br>
+ <strong><em>语法:</em></strong>
+``` java
+ ObjectReference::methodName</p>
+
+<p>如果是静态方法，ClassName::methodName。如 Object ::equals</p>
+
+<p>如果是实例方法，Instance::methodName。如Object obj=new Object();obj::equals;</p>
+
+<p>构造函数，ClassName::new
+<code>
+***例子***
+</code> java</p>
+
+<pre><code>@FunctionalInterface
+interface Converter&lt;F, T&gt; {
+    T convert(F from);
+}
+</code></pre>
+
+<p><code>
+使用常规的Lambda表达式：
+</code> java</p>
+
+<pre><code>Converter&lt;String, Integer&gt; converter = (from) -&gt; Integer.valueOf(from);
+Integer converted = converter.convert("1024");
+System.out.println(converted); // 1024
+</code></pre>
+
+<p><code>
+静态方法引用：
+</code> java</p>
+
+<pre><code>Converter&lt;String, Integer&gt; converter = Integer::valueOf;
+Integer converted = converter.convert("1024");
+System.out.println(converted); // 1024
+</code></pre>
+
+<p><code>
+对象方法引用:
+</code> java
+public class Something {</p>
+
+<pre><code>String startsWith(String s) {
+    return String.valueOf(s.charAt(0));
+}
+</code></pre>
+
+<p>}</p>
+
+<pre><code>    Something something = new Something();
+    Converter&lt;String, String&gt; converter = something::startsWith;
+    String converted = converter.convert("Java");
+    System.out.println(converted); // J
+</code></pre>
+
+<p><code>
+构造函数引用:
+</code> java
+class Person {</p>
+
+<pre><code>String firstName;
+String lastName;
+
+Person() {}
+
+Person(String firstName, String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+}
+@Override
+public String toString() {
+    return "Person [firstName=" + firstName + ", lastName=" + lastName
+            + "]";
+}
+</code></pre>
+
+<p>}</p>
+
+<p>@FunctionalInterface
+interface PersonFactory<P extends Person> {</p>
+
+<pre><code>P create(String firstName, String lastName);
+</code></pre>
+
+<p>}</p>
+
+<p>PersonFactory<Person> personFactory = Person::new;
+Person person = personFactory.create(&ldquo;Peter&rdquo;, &ldquo;Parker&rdquo;);
+System.out.println(person);//Person [firstName=Peter, lastName=Parker]
+<code>
+通过Person::new来创建一个Person类构造函数的引用。Java编译器会自动地选择合适的构造函数来匹配PersonFactory.create函数的签名，并选择正确的构造函数形式。
+</code> java
+//自动匹配Person类的 Person(String firstName, String lastName)构造函数。
+PersonFactory<Person> personFactory = Person::new;
+```
+</br>
+<strong><em>参考资料:</em></strong>
+</br>
+<a href="http://winterbe.com/posts/2014/03/16/java-8-tutorial/">http://winterbe.com/posts/2014/03/16/java-8-tutorial/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java8新特性之Lambda表达式]]></title>
@@ -149,6 +417,7 @@ List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);</p>
 </br></p>
 
 <p><strong><em>2、传递行为，而不仅仅是传值</em></strong>
+</br>
 传值局限性的场景</p>
 
 <p>``` java
@@ -221,28 +490,9 @@ sumAll(numbers, n &ndash;> n % 2 == 0);<br/>
 sumAll(numbers, n &ndash;> n > 3);</p>
 
 <p>```
-</br>
-Preducate源码如下：</p>
+</br></p>
 
-<p>``` java
-@FunctionalInterface
-public interface Predicate<T> {</p>
-
-<pre><code>/**
- * Evaluates this predicate on the given argument.
- *
- * @param t the input argument
- * @return {@code true} if the input argument matches the predicate,
- * otherwise {@code false}
- */
-boolean test(T t);
-</code></pre>
-
-<p>&hellip;..
-}</p>
-
-<p>```
-<strong><em>3、Consumer与Loan Pattern</em></strong>
+<p><strong><em>3、Consumer与Loan Pattern</em></strong>
 </br>
 比如有一个资源类Resource：</p>
 
@@ -404,7 +654,395 @@ default double sqrt(int a) {
 
 <p>}
 Formula formula = (a) &ndash;> sqrt( a * 100);
-```
+```</p>
+
+<h2>内置函数式接口</h2>
+
+<p><strong><em>Predicates</em></strong>
+</br>
+Predicate是一个布尔类型的函数，该函数只有一个输入参数。Predicate接口包含了多种默认方法，用于处理复杂的逻辑动词（and, or，negate）
+``` java</p>
+
+<pre><code>    Predicate&lt;String&gt; predicate = (s) -&gt; s.length() &gt; 0;
+    predicate.test("Java");
+
+    Predicate&lt;String&gt; predicate1 = String::isEmpty;
+
+    System.out.println(predicate1.test("Java"));// false
+    System.out.println(predicate1.negate().test("Java"));// true
+
+    Predicate&lt;String&gt; predicate2 = String::isEmpty;
+
+    System.out.println(predicate2.or(predicate).test("JAVA"));// true
+    System.out.println(predicate2.and(predicate).test("JAVA"));// false
+    System.out.println(Predicate.isEqual("Java").test("Java"));// true
+    System.out.println(Predicate.isEqual("Java").test("Java8"));// false
+</code></pre>
+
+<p>```</p>
+
+<p>Predicate源码：
+``` java
+@FunctionalInterface
+public interface Predicate<T> {</p>
+
+<pre><code>boolean test(T t);
+//and
+default Predicate&lt;T&gt; and(Predicate&lt;? super T&gt; other) {
+    Objects.requireNonNull(other);
+    return (t) -&gt; test(t) &amp;&amp; other.test(t);
+}
+//取反
+default Predicate&lt;T&gt; negate() {
+    return (t) -&gt; !test(t);
+}
+//or
+default Predicate&lt;T&gt; or(Predicate&lt;? super T&gt; other) {
+    Objects.requireNonNull(other);
+    return (t) -&gt; test(t) || other.test(t);
+}
+//isEqual
+static &lt;T&gt; Predicate&lt;T&gt; isEqual(Object targetRef) {
+    return (null == targetRef)
+            ? Objects::isNull
+            : object -&gt; targetRef.equals(object);
+}
+</code></pre>
+
+<p>}
+<code>
+***Functions***
+&lt;/br&gt;
+Function接口接收一个参数，并返回单一的结果。默认方法可以将多个函数串在一起。
+</code> java</p>
+
+<pre><code>    Function&lt;String, Integer&gt; toInteger = Integer::valueOf;
+    Function&lt;String, String&gt; backToString = toInteger
+            .andThen(String::valueOf);
+    Integer integer = toInteger.apply("123");
+    String string = backToString.apply("123");
+    System.out.println(integer);// 123
+    System.out.println(string);// "123"
+
+
+    Function&lt;String, Integer&gt; toInteger = Integer::valueOf;
+    Function&lt;String, String&gt; toString = (from) -&gt; from + "123";
+    //toString Function的结果作为toInteger Fuction的输入
+    Integer result = toInteger.compose(toString).apply("123");//此处的"123"是toString Function的输入
+    System.out.println(result);//123123     
+</code></pre>
+
+<p><code>
+Function源码:
+</code> java
+@FunctionalInterface
+public interface Function&lt;T, R> {</p>
+
+<p>  R apply(T t);
+  default <V> Function&lt;V, R> compose(Function&lt;? super V, ? extends T> before) {</p>
+
+<pre><code>    Objects.requireNonNull(before);
+    return (V v) -&gt; apply(before.apply(v));
+}
+</code></pre>
+
+<p>   default <V> Function&lt;T, V> andThen(Function&lt;? super R, ? extends V> after) {</p>
+
+<pre><code>    Objects.requireNonNull(after);
+    return (T t) -&gt; after.apply(apply(t));
+}
+</code></pre>
+
+<p> static <T> Function&lt;T, T> identity() {</p>
+
+<pre><code>    return t -&gt; t;
+}
+</code></pre>
+
+<p>}
+<code>
+***Suppliers***
+&lt;/br&gt;
+Supplier接口产生一个给定类型的结果。与Function不同的是，Supplier没有输入参数。
+</code> java</p>
+
+<pre><code>    Supplier&lt;Person&gt; personSupplier = Person::new;
+    Person person=personSupplier.get();
+</code></pre>
+
+<p><code>
+Suppliers源码：
+</code> java
+@FunctionalInterface
+public interface Supplier<T> {</p>
+
+<pre><code>/**
+ * Gets a result.
+ *
+ * @return a result
+ */
+T get();
+</code></pre>
+
+<p>}
+```</p>
+
+<p><strong><em>Consumers</em></strong></p>
+
+<p>Consumer代表了在一个输入参数上需要进行的操作。
+为什么Java增加Lambda表达式章节的例子：</p>
+
+<p>``` java</p>
+
+<pre><code>public static void withResource(Consumer&lt;Resource&gt; consumer) {
+    Resource resource = new Resource();
+    try {
+       //输入一个resource对象
+        consumer.accept(resource);
+    } finally {
+        resource.dispose();
+    }
+}
+
+public static void main(String[] args) {
+     //在输入的resource对象上执行operate()操作
+    Resource.withResource(resource -&gt; resource.operate());
+}
+</code></pre>
+
+<p><code>
+Consumer也可以将多个操作穿串一起
+</code> java</p>
+
+<pre><code> public class Person {
+   private String firstName;
+   private String lastName;
+
+   Person() {
+
+   }
+
+   public Person(String firstName, String lastName) {
+    super();
+    this.firstName = firstName;
+    this.lastName = lastName;
+   }
+   }
+
+   //先执行打印firstName操作  
+   Consumer&lt;Person&gt; greeter = (p) -&gt; System.out.println("Hello, "
+            + p.getFirstName());
+   //后执行打印lastName操作      
+  greeter.andThen(p -&gt; System.out.println("Hello, " + p.getLastName()))
+            .accept(new Person("Luke", "Skywalker"));
+
+   Console:
+   Hello, Luke
+   Hello, Skywalker
+</code></pre>
+
+<p><code>
+Consumer源码：
+</code> java
+@FunctionalInterface
+public interface Consumer<T> {</p>
+
+<pre><code>void accept(T t);
+default Consumer&lt;T&gt; andThen(Consumer&lt;? super T&gt; after) {
+    Objects.requireNonNull(after);
+    return (T t) -&gt; { accept(t); after.accept(t); };
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p><strong><em>Comparators</em></strong></p>
+
+<p>Java 8 为这个接口添加了不同的默认方法。
+``` java</p>
+
+<pre><code>    Comparator&lt;Person&gt; comparator = (p1, p2) -&gt; p1.getFirstName()
+            .compareTo(p2.getFirstName());
+
+    Person p1 = new Person("John", "Doe");
+    Person p2 = new Person("Alice", "Wonderland");
+
+    comparator.compare(p1, p2); //&gt; 0
+    comparator.reversed().compare(p1, p2); // &lt; 0
+</code></pre>
+
+<p>```
+<strong><em>Optionals</em></strong>
+</br>
+Optional不是一个函数式接口，而是一个精巧的工具接口，用来防止NullPointerEception产生。
+</br>
+Optional类的Javadoc描述如下：
+</br>
+这是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。</p>
+
+<h6>of:调用工厂方法创建Optional实例</h6>
+
+<p><code>java
+Optional&lt;String&gt; name = Optional.of("Sanaulla");
+//传入参数为null，抛出NullPointerException.
+Optional&lt;String&gt; someNull = Optional.of(null);
+</code></p>
+
+<h6>ofNullable:为指定的值创建一个Optional，如果指定的值为null，则返回一个空的Optional。</h6>
+
+<p>ofNullable与of方法相似，唯一的区别是可以接受参数为null的情况。
+<code>java
+Optional empty = Optional.ofNullable(null);
+</code></p>
+
+<h6>isPresent:如果值存在返回true，否则返回false。</h6>
+
+<p><code>java
+ Optional&lt;String&gt; name = Optional.of("Java");
+ System.out.println(name.isPresent());//true
+</code></p>
+
+<h6>get:如果Optional有值则将其返回，否则抛出NoSuchElementException。</h6>
+
+<p><code>java
+Optional empty = Optional.ofNullable(null);
+//执行下面的代码会输出：No value present
+try {
+  //在空的Optional实例上调用get()，抛出NoSuchElementException
+  System.out.println(empty.get());
+} catch (NoSuchElementException ex) {
+  System.out.println(ex.getMessage());
+}
+</code></p>
+
+<h6>ifPresent:如果Optional实例有值则为其调用Consumer，否则不做处理</h6>
+
+<p>``` java</p>
+
+<pre><code>    Optional&lt;String&gt; name = Optional.of("Java");
+    name.ifPresent((value) -&gt; {
+        System.out.println("The length of the value is: " + value.length());
+    //The length of the value is: 4
+    });
+</code></pre>
+
+<p>```</p>
+
+<h6>orElse:如果有值则将其返回，否则返回指定的其它值。</h6>
+
+<p>``` java</p>
+
+<pre><code>    Optional&lt;Object&gt; empty = Optional.ofNullable(null);
+    Optional&lt;String&gt; name = Optional.of("not null");
+    System.out.println(empty.orElse("There is no value present!"));
+    System.out.println(name.orElse("There is some value!"));
+
+    Console:
+    There is no value present!
+    not null
+</code></pre>
+
+<p>```</p>
+
+<h6>orElseGet:orElseGet与orElse方法类似，区别在于得到的默认值。orElse方法将传入的字符串作为默认值，orElseGet方法可以接受Supplier接口的实现用来生成默认值。</h6>
+
+<p>``` java</p>
+
+<pre><code>    //orElseGet与orElse方法类似，区别在于orElse传入的是默认值，
+    //orElseGet可以接受一个lambda表达式生成默认值。
+    System.out.println(empty.orElseGet(() -&gt; "Default Value"));
+    System.out.println(name.orElseGet(() -&gt; "Default Value"));
+
+   Console:
+   Default Value
+   not null
+</code></pre>
+
+<p>```</p>
+
+<h6>orElseThrow:如果有值则将其返回，否则抛出Supplier接口创建的异常。</h6>
+
+<p>``` java
+try {
+  //orElseThrow与orElse方法类似。与返回默认值不同，
+  //orElseThrow会抛出lambda表达式或方法生成的异常</p>
+
+<p>  empty.orElseThrow(ValueAbsentException::new);
+} catch (Throwable ex) {
+  //输出: No value present in the Optional instance
+  System.out.println(ex.getMessage());
+}</p>
+
+<p>class ValueAbsentException extends Throwable {</p>
+
+<p>  public ValueAbsentException() {</p>
+
+<pre><code>super();
+</code></pre>
+
+<p>  }</p>
+
+<p>  public ValueAbsentException(String msg) {</p>
+
+<pre><code>super(msg);
+</code></pre>
+
+<p>  }</p>
+
+<p>  @Override
+  public String getMessage() {</p>
+
+<pre><code>return "No value present in the Optional instance";
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<h6>map:如果有值，则对其执行调用mapping函数得到返回值。如果返回值不为null，则创建包含mapping返回值的Optional作为map方法返回值，否则返回空Optional。</h6>
+
+<p>``` java</p>
+
+<pre><code>    Optional&lt;String&gt; name = Optional.of("not null");
+    Optional&lt;String&gt; upperName = name.map((value) -&gt; value.toUpperCase());
+    //输出:NOT NULL
+    System.out.println(upperName.orElse("No value found"));
+</code></pre>
+
+<p>```</p>
+
+<h6>flatMap:如果有值，为其执行mapping函数返回Optional类型返回值，否则返回空Optional。flatMap与map（Funtion）方法类似，区别在于flatMap中的mapper返回值必须是Optional。调用结束时，flatMap不会对结果用Optional封装。</h6>
+
+<p>``` java</p>
+
+<pre><code>    Optional&lt;String&gt; name = Optional.of("not null");
+    name = name.flatMap((value) -&gt; Optional.of(value.toUpperCase()));
+    //输出:NOT NULL
+    System.out.println(name.orElse("No value found"));    
+</code></pre>
+
+<p>```</p>
+
+<h6>filter:filter个方法通过传入限定条件对Optional实例的值进行过滤。对于filter函数应该传入实现了Predicate接口的lambda表达式。</h6>
+
+<p>``` java</p>
+
+<pre><code>    Optional&lt;String&gt; name = Optional.of("Sanaulla");
+    //filter方法检查给定的Option值是否满足某些条件。
+    //如果满足则返回同一个Option实例，否则返回空Optional。
+    Optional&lt;String&gt; longName = name.filter((value) -&gt; value.length() &gt; 6);
+    System.out.println(longName.orElse("The name is less than 6 characters"));//输出Sanaulla
+
+    //另一个例子是Optional值不满足filter指定的条件。
+    Optional&lt;String&gt; anotherName = Optional.of("Sana");
+    Optional&lt;String&gt; shortName = anotherName.filter((value) -&gt; value.length() &gt; 6);
+    //输出：The name is less than 6 characters
+    System.out.println(shortName.orElse("The name is less than 6 characters"));
+</code></pre>
+
+<p>```
+</br>
 <strong><em>参考资料:</em></strong>
 </br>
 <a href="http://www.lambdafaq.org/">http://www.lambdafaq.org/</a>
@@ -413,7 +1051,9 @@ Formula formula = (a) &ndash;> sqrt( a * 100);
 </br>
 <a href="http://java.dzone.com/articles/why-we-need-lambda-expressions">http://java.dzone.com/articles/why-we-need-lambda-expressions</a>
 </br>
-<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a></p>
+<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a>
+</br>
+<a href="http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html">http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html</a></p>
 ]]></content>
   </entry>
   
@@ -446,42 +1086,6 @@ Formula formula = (a) &ndash;> sqrt( a * 100);
    <strong><em>参考资料:</em></strong>
 </br>
  <a href="http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html">http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eclipse Kepler搭建Java8开发环境]]></title>
-    <link href="http://renpengben.github.io/blog/2014/06/10/eclipse-kepler-java8/"/>
-    <updated>2014-06-10T19:51:11+08:00</updated>
-    <id>http://renpengben.github.io/blog/2014/06/10/eclipse-kepler-java8</id>
-    <content type="html"><![CDATA[<p>俗话说"工欲善其事，必先利其器",Eclipse Kepler已支持Java 8,可以下载官方提供的<a href="http://eclipse.org/downloads/index-java8.php">Java™ 8 Support版本</a>版本来使用此功能。已经下载的Eclipse Kepler SR2也可以通过安装插件的方式来支持 Java 8，具体步骤如下：</p>
-
-<p><strong><em>下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html">Java 8</a>并确保你的Eclipse版本是Kepler SR2。</br></em></strong></p>
-
-<p> 选择菜单：”Help > Eclipse Marketplace…”。</br>
- 在搜索框中输入”Java 8 Kepler”。
- 安装<a href="http://marketplace.eclipse.org/content/java-8-support-eclipse-kepler-sr2">Java&nbsp;8 support for
- Eclipse&nbsp;Kepler&nbsp;SR2</a>插件。</br>
- 安装其他可选插件：</br>
- Java EE扩展支持：<a href="http://marketplace.eclipse.org/content/java-8-facet-web-tools-eclipse-kepler-sr2">Java 8 Facet for Web Tools for Eclipse Kepler SR2</a></br>
- Maven扩展支持：<a href="http://marketplace.eclipse.org/content/java%E2%84%A2-8-support-m2e-eclipse-kepler">Java 8 support for m2e for Eclipse Kepler SR2</a></p>
-
-<p><img src="http://renpengben.github.io/images/post-image/java8-marketplace.png">
-</br>
-<strong><em>多版本JDK共存问题</em></strong>
-</br>
-平常开发环境使用JDK7，如果又要使用JDK8做一些学习测试，那么可以在eclipse.ini文件中指定-vm参数，JAVA_HOME还是使用JDK7相互之间不影响。
-</br></p>
-
-<pre>
--vm
-C:/Program Files (x86)/Java/jdk1.8.0_05/bin/javaw.exe
-</pre>
-
-
-<p><strong><em>参考资料:</em></strong>
-</br>
-<a href="http://www.eclipse.org/downloads/java8/">http://www.eclipse.org/downloads/java8/</a></p>
 ]]></content>
   </entry>
   

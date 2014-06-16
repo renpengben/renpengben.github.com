@@ -262,6 +262,7 @@ Lambda表达式如何匹配Java的类型系统？每一个lambda都能够通过�
 </br></p>
 
 <p><strong><em>2、传递行为，而不仅仅是传值</em></strong>
+</br>
 传值局限性的场景</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -367,40 +368,9 @@ sumAll算法很简单，完成的是将List中所有元素相加。某一天如�
 
 
 <p>
-</br>
-Preducate源码如下：</p>
+</br></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="cm">/**</span>
-</span><span class='line'><span class="cm">     * Evaluates this predicate on the given argument.</span>
-</span><span class='line'><span class="cm">     *</span>
-</span><span class='line'><span class="cm">     * @param t the input argument</span>
-</span><span class='line'><span class="cm">     * @return {@code true} if the input argument matches the predicate,</span>
-</span><span class='line'><span class="cm">     * otherwise {@code false}</span>
-</span><span class='line'><span class="cm">     */</span>
-</span><span class='line'>    <span class="kt">boolean</span> <span class="nf">test</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
-</span><span class='line'><span class="o">.....</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-<strong><em>3、Consumer与Loan Pattern</em></strong>
+<p><strong><em>3、Consumer与Loan Pattern</em></strong>
 </br>
 比如有一个资源类Resource：</p>
 
@@ -646,7 +616,603 @@ Preducate源码如下：</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p></p>
+
+<h2>内置函数式接口</h2>
+
+<p><strong><em>Predicates</em></strong>
+</br>
+Predicate是一个布尔类型的函数，该函数只有一个输入参数。Predicate接口包含了多种默认方法，用于处理复杂的逻辑动词（and, or，negate）</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">predicate</span> <span class="o">=</span> <span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">predicate</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">predicate1</span> <span class="o">=</span> <span class="nl">String:</span><span class="o">:</span><span class="n">isEmpty</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">predicate1</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">));</span><span class="c1">// false</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">predicate1</span><span class="o">.</span><span class="na">negate</span><span class="o">().</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">));</span><span class="c1">// true</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">predicate2</span> <span class="o">=</span> <span class="nl">String:</span><span class="o">:</span><span class="n">isEmpty</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">predicate2</span><span class="o">.</span><span class="na">or</span><span class="o">(</span><span class="n">predicate</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;JAVA&quot;</span><span class="o">));</span><span class="c1">// true</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">predicate2</span><span class="o">.</span><span class="na">and</span><span class="o">(</span><span class="n">predicate</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;JAVA&quot;</span><span class="o">));</span><span class="c1">// false</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Predicate</span><span class="o">.</span><span class="na">isEqual</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">));</span><span class="c1">// true</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Predicate</span><span class="o">.</span><span class="na">isEqual</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="s">&quot;Java8&quot;</span><span class="o">));</span><span class="c1">// false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Predicate源码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="nf">test</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">//and</span>
+</span><span class='line'>    <span class="k">default</span> <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">and</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">other</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">other</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">//取反</span>
+</span><span class='line'>    <span class="k">default</span> <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">negate</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">test</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">//or</span>
+</span><span class='line'>    <span class="k">default</span> <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">or</span><span class="o">(</span><span class="n">Predicate</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">other</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">test</span><span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">||</span> <span class="n">other</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">//isEqual</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Predicate</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">isEqual</span><span class="o">(</span><span class="n">Object</span> <span class="n">targetRef</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">targetRef</span><span class="o">)</span>
+</span><span class='line'>                <span class="o">?</span> <span class="nl">Objects:</span><span class="o">:</span><span class="n">isNull</span>
+</span><span class='line'>                <span class="o">:</span> <span class="n">object</span> <span class="o">-&gt;</span> <span class="n">targetRef</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>
+<strong><em>Functions</em></strong>
+</br>
+Function接口接收一个参数，并返回单一的结果。默认方法可以将多个函数串在一起。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">toInteger</span> <span class="o">=</span> <span class="nl">Integer:</span><span class="o">:</span><span class="n">valueOf</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">backToString</span> <span class="o">=</span> <span class="n">toInteger</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">andThen</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">valueOf</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">Integer</span> <span class="n">integer</span> <span class="o">=</span> <span class="n">toInteger</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s">&quot;123&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">string</span> <span class="o">=</span> <span class="n">backToString</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s">&quot;123&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">integer</span><span class="o">);</span><span class="c1">// 123</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">string</span><span class="o">);</span><span class="c1">// &quot;123&quot;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">toInteger</span> <span class="o">=</span> <span class="nl">Integer:</span><span class="o">:</span><span class="n">valueOf</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">toString</span> <span class="o">=</span> <span class="o">(</span><span class="n">from</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">from</span> <span class="o">+</span> <span class="s">&quot;123&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="c1">//toString Function的结果作为toInteger Fuction的输入</span>
+</span><span class='line'>  <span class="n">Integer</span> <span class="n">result</span> <span class="o">=</span> <span class="n">toInteger</span><span class="o">.</span><span class="na">compose</span><span class="o">(</span><span class="n">toString</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="s">&quot;123&quot;</span><span class="o">);</span><span class="c1">//此处的&quot;123&quot;是toString Function的输入</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span><span class="c1">//123123     </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Function源码:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">R</span> <span class="nf">apply</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">default</span> <span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">V</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="n">compose</span><span class="o">(</span><span class="n">Function</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">V</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">before</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">before</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">V</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="n">before</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">v</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>   <span class="k">default</span> <span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">andThen</span><span class="o">(</span><span class="n">Function</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">R</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">after</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">after</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">apply</span><span class="o">(</span><span class="n">t</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">identity</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+<strong><em>Suppliers</em></strong>
+</br>
+Supplier接口产生一个给定类型的结果。与Function不同的是，Supplier没有输入参数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">personSupplier</span> <span class="o">=</span> <span class="nl">Person:</span><span class="o">:</span><span class="k">new</span><span class="o">;</span>
+</span><span class='line'>  <span class="n">Person</span> <span class="n">person</span><span class="o">=</span><span class="n">personSupplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Suppliers源码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     * Gets a result.</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * @return a result</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>    <span class="n">T</span> <span class="nf">get</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p><strong><em>Consumers</em></strong></p>
+
+<p>Consumer代表了在一个输入参数上需要进行的操作。
+为什么Java增加Lambda表达式章节的例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">withResource</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">consumer</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">Resource</span> <span class="n">resource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="o">();</span>
+</span><span class='line'>  <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>       <span class="c1">//输入一个resource对象</span>
+</span><span class='line'>      <span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">resource</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">resource</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="c1">//在输入的resource对象上执行operate()操作</span>
+</span><span class='line'>  <span class="n">Resource</span><span class="o">.</span><span class="na">withResource</span><span class="o">(</span><span class="n">resource</span> <span class="o">-&gt;</span> <span class="n">resource</span><span class="o">.</span><span class="na">operate</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Consumer也可以将多个操作穿串一起</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+</span><span class='line'>   <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+</span><span class='line'>   <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">Person</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="n">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">super</span><span class="o">();</span>
+</span><span class='line'>  <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">//先执行打印firstName操作   </span>
+</span><span class='line'>   <span class="n">Consumer</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">greeter</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, &quot;</span>
+</span><span class='line'>          <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getFirstName</span><span class="o">());</span>
+</span><span class='line'>   <span class="c1">//后执行打印lastName操作       </span>
+</span><span class='line'>  <span class="n">greeter</span><span class="o">.</span><span class="na">andThen</span><span class="o">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="na">getLastName</span><span class="o">()))</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">&quot;Luke&quot;</span><span class="o">,</span> <span class="s">&quot;Skywalker&quot;</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nl">Console:</span>
+</span><span class='line'>   <span class="n">Hello</span><span class="o">,</span> <span class="n">Luke</span>
+</span><span class='line'>   <span class="n">Hello</span><span class="o">,</span> <span class="n">Skywalker</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Consumer源码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">default</span> <span class="n">Consumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">andThen</span><span class="o">(</span><span class="n">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">after</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span> <span class="n">after</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span> <span class="o">};</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p><strong><em>Comparators</em></strong></p>
+
+<p>Java 8 为这个接口添加了不同的默认方法。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">p1</span><span class="o">.</span><span class="na">getFirstName</span><span class="o">()</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">p2</span><span class="o">.</span><span class="na">getFirstName</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">Person</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">&quot;John&quot;</span><span class="o">,</span> <span class="s">&quot;Doe&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">Person</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="s">&quot;Alice&quot;</span><span class="o">,</span> <span class="s">&quot;Wonderland&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">comparator</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span> <span class="c1">//&gt; 0</span>
+</span><span class='line'>  <span class="n">comparator</span><span class="o">.</span><span class="na">reversed</span><span class="o">().</span><span class="na">compare</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span> <span class="c1">// &lt; 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+<strong><em>Optionals</em></strong>
+</br>
+Optional不是一个函数式接口，而是一个精巧的工具接口，用来防止NullPointerEception产生。
+</br>
+Optional类的Javadoc描述如下：
+</br>
+这是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。</p>
+
+<h6>of:调用工厂方法创建Optional实例</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Sanaulla&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//传入参数为null，抛出NullPointerException.</span>
+</span><span class='line'><span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">someNull</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>ofNullable:为指定的值创建一个Optional，如果指定的值为null，则返回一个空的Optional。</h6>
+
+<p>ofNullable与of方法相似，唯一的区别是可以接受参数为null的情况。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Optional</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>isPresent:如果值存在返回true，否则返回false。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">isPresent</span><span class="o">());</span><span class="c1">//true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>get:如果Optional有值则将其返回，否则抛出NoSuchElementException。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Optional</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+</span><span class='line'><span class="c1">//执行下面的代码会输出：No value present </span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">//在空的Optional实例上调用get()，抛出NoSuchElementException</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">empty</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchElementException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>ifPresent:如果Optional实例有值则为其调用Consumer，否则不做处理</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Java&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">name</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">((</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;The length of the value is: &quot;</span> <span class="o">+</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">//The length of the value is: 4</span>
+</span><span class='line'>  <span class="o">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>orElse:如果有值则将其返回，否则返回指定的其它值。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>    <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;not null&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">empty</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;There is no value present!&quot;</span><span class="o">));</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;There is some value!&quot;</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nl">Console:</span>
+</span><span class='line'>    <span class="n">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">value</span> <span class="n">present</span><span class="o">!</span>
+</span><span class='line'>    <span class="n">not</span> <span class="kc">null</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>orElseGet:orElseGet与orElse方法类似，区别在于得到的默认值。orElse方法将传入的字符串作为默认值，orElseGet方法可以接受Supplier接口的实现用来生成默认值。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="c1">//orElseGet与orElse方法类似，区别在于orElse传入的是默认值，</span>
+</span><span class='line'>  <span class="c1">//orElseGet可以接受一个lambda表达式生成默认值。</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">empty</span><span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;Default Value&quot;</span><span class="o">));</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">orElseGet</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;Default Value&quot;</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nl">Console:</span>
+</span><span class='line'>   <span class="n">Default</span> <span class="n">Value</span>
+</span><span class='line'>   <span class="n">not</span> <span class="kc">null</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>orElseThrow:如果有值则将其返回，否则抛出Supplier接口创建的异常。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">//orElseThrow与orElse方法类似。与返回默认值不同，</span>
+</span><span class='line'>  <span class="c1">//orElseThrow会抛出lambda表达式或方法生成的异常 </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">empty</span><span class="o">.</span><span class="na">orElseThrow</span><span class="o">(</span><span class="nl">ValueAbsentException:</span><span class="o">:</span><span class="k">new</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">//输出: No value present in the Optional instance</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">ValueAbsentException</span> <span class="kd">extends</span> <span class="n">Throwable</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="nf">ValueAbsentException</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="nf">ValueAbsentException</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;No value present in the Optional instance&quot;</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>map:如果有值，则对其执行调用mapping函数得到返回值。如果返回值不为null，则创建包含mapping返回值的Optional作为map方法返回值，否则返回空Optional。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;not null&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">upperName</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="na">map</span><span class="o">((</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">//输出:NOT NULL</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">upperName</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;No value found&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>flatMap:如果有值，为其执行mapping函数返回Optional类型返回值，否则返回空Optional。flatMap与map（Funtion）方法类似，区别在于flatMap中的mapper返回值必须是Optional。调用结束时，flatMap不会对结果用Optional封装。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;not null&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="na">flatMap</span><span class="o">((</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">()));</span>
+</span><span class='line'>    <span class="c1">//输出:NOT NULL</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;No value found&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h6>filter:filter个方法通过传入限定条件对Optional实例的值进行过滤。对于filter函数应该传入实现了Predicate接口的lambda表达式。</h6>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Sanaulla&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="c1">//filter方法检查给定的Option值是否满足某些条件。</span>
+</span><span class='line'>  <span class="c1">//如果满足则返回同一个Option实例，否则返回空Optional。</span>
+</span><span class='line'>  <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">longName</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="na">filter</span><span class="o">((</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">longName</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;The name is less than 6 characters&quot;</span><span class="o">));</span><span class="c1">//输出Sanaulla</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">//另一个例子是Optional值不满足filter指定的条件。</span>
+</span><span class='line'>  <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">anotherName</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Sana&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">shortName</span> <span class="o">=</span> <span class="n">anotherName</span><span class="o">.</span><span class="na">filter</span><span class="o">((</span><span class="n">value</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="o">);</span>
+</span><span class='line'>  <span class="c1">//输出：The name is less than 6 characters</span>
+</span><span class='line'>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">shortName</span><span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="s">&quot;The name is less than 6 characters&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+</br>
 <strong><em>参考资料:</em></strong>
 </br>
 <a href="http://www.lambdafaq.org/">http://www.lambdafaq.org/</a>
@@ -655,7 +1221,9 @@ Preducate源码如下：</p>
 </br>
 <a href="http://java.dzone.com/articles/why-we-need-lambda-expressions">http://java.dzone.com/articles/why-we-need-lambda-expressions</a>
 </br>
-<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a></p>
+<a href="http://java.dzone.com/articles/why-we-need-lambda-expressions-0">http://java.dzone.com/articles/why-we-need-lambda-expressions-0</a>
+</br>
+<a href="http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html">http://www.javacodegeeks.com/2013/09/deep-dive-into-optional-class-api-in-java-8.html</a></p>
 </div>
 
 </article>
