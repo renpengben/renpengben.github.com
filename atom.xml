@@ -4,7 +4,7 @@
   <title><![CDATA[Renpeng's Blog]]></title>
   <link href="http://renpengben.github.io/atom.xml" rel="self"/>
   <link href="http://renpengben.github.io/"/>
-  <updated>2014-06-16T21:20:07+08:00</updated>
+  <updated>2014-06-16T21:23:53+08:00</updated>
   <id>http://renpengben.github.io/</id>
   <author>
     <name><![CDATA[Renpeng]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Java8新特性之改进推断类型]]></title>
+    <title type="html"><![CDATA[Java8新特性之类型推断]]></title>
     <link href="http://renpengben.github.io/blog/2014/06/16/improved-type-inference/"/>
     <updated>2014-06-16T21:17:43+08:00</updated>
     <id>http://renpengben.github.io/blog/2014/06/16/improved-type-inference</id>
@@ -1678,7 +1678,7 @@ Optional类的Javadoc描述如下：
    </br>
    5.Type Annotations(类型注解)
    </br>
-   6.Improved type inference(改进类型推断)
+   6.<a href="http://renpengben.github.io/blog/2014/06/16/improved-type-inference/">Improved type inference(改进类型推断)</a>
    </br>
    7.Method parameter reflection(方法参数反射)
  <h4>Collections(集合)</h4>
