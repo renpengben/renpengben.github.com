@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>WeUI</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.0.2/weui.min.css"/>
+</head>
+<style>
+    body {
+        background-color: #f8f8f8;
+    }
+
+    .flex-item {
+        text-align: center;
+        color: #AAA;
+        font-size: 13px;
+    }
+
+    .flex-item span {
+        color: #666;
+    }
+
+    .title {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .item-top{
+        padding: 0 10px;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+    .user-info{
+        float: left;
+        padding-right: 15px;
+    }
+    .avatar{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .name{
+        color: #666;
+        font-size: 15px;
+        position: relative;
+        top: -8px;
+        left: 5px;
+    }
+    .status{
+        float: right;
+        margin-top: 6px;
+    }
+    .status li{
+        text-align: center;
+        line-height: 18px;
+        border-radius: 3px;
+        font-size: 12px;
+        float: left;
+        color: #fff;
+        margin-left: 5px;
+        padding: 0 3px;
+    }
+</style>
+
+<body ontouchstart>
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div>
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div><div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="height: 30px;padding: 12px;">
+        <div class="item-top">
+            <div class="user-info"><span class="avatar">                                                       <img
+                    src="http://thumb.qschou.com/files/qschou.com/avatar/820/2821e066-0b31-4570-8255-bd8200d2ab3c/58100774409d053e6570d7d823a183695de30505h5.png@!thumb.png"
+                    alt="">                                              </span> <span class="name">彭爹辣椒炒肉</span></div>
+            <ul class="status">
+                <li style="background-color:#43AC43;color:#FFFFFF">进行中</li>
+            </ul>
+        </div>
+    </div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text">
+            <h2 class="weui-media-box__title title">优质小麦大优惠！</h2>
+            <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files">
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                    <li class="weui-uploader__file"
+                        style="background-image:url(http://thumb.qschou.com/files/qschou.com/project/957189a6536-ade3-40b8-8b6e-91dd9caa048914779716875641477450003f78968deb5b8a52e4f79eb8a8082b0d.jpg@!thumb.png)"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="weui-media-box">
+        <div class="weui-flex">
+            <div class="weui-flex__item flex-item">目标：<span>1000</span>千克</div>
+            <div class="weui-flex__item flex-item">已筹：<span>90</span>千克</div>
+            <div class="weui-flex__item flex-item">进度：<span>90</span>%</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
